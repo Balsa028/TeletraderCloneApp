@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/prvi"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="Sample 1"
+        />
+    <item
+        android:id="@+id/drugi"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="Sample 2"/>
+    <item
+        android:id="@+id/treci"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="Sample 3"/>
+
+</menu>

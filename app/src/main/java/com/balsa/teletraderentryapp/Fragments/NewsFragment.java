@@ -1,5 +1,6 @@
 package com.balsa.teletraderentryapp.Fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balsa.teletraderentryapp.Adapters.NewsAdapter;
+import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.Models.NewsArticle;
 import com.balsa.teletraderentryapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -212,6 +214,7 @@ public class NewsFragment extends Fragment {
         private InputStream getInputStream(){
             try {
                 URL url = new URL("https://www.teletrader.rs/downloads/tt_news_list.xml");
+                //autentikator zbog povlacenja podataka radi kojih treba autorizacija u suprotnom se dobija exception
                 Authenticator.setDefault(new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -238,10 +241,12 @@ public class NewsFragment extends Fragment {
                         Toast.makeText(getActivity(), "Kliknuto", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.home:
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new MainFragment())
-                                .commit();
-                        break;
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+//                        getActivity().getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.fragmentContainer,new MainFragment())
+//                                .commit();
+//                        break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentContainer,new NewsFragment())

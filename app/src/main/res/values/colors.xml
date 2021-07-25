@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="nav_background">#1E1E1E</color>
-    <color name="light_blue">#4C62DA</color>
+    <color name="light_blue">#2196F3</color>
     <color name="toggle_color">#505052</color>
     <color name="light_grey">#2E2D2D</color>
+    <color name="svetlo_siva">#6F6C6C</color>
     <color name="dirty_white">#BBB9B9</color>
 </resources>

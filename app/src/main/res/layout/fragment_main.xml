@@ -24,16 +24,15 @@
                 android:layout_below="@id/tabLayout"
                 android:id="@+id/viewPager"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bottomNavView"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/bottom_nav_view"
-            app:itemBackground="@color/light_grey"
-            app:itemTextColor="@color/white"/>
-
     </RelativeLayout>
-
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomNavView"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_nav_view"
+        app:itemBackground="@color/light_grey"
+        app:itemTextColor="@color/white" />
 
 </FrameLayout>

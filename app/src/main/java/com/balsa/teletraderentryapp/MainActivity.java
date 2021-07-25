@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         initNavigationView();
 
-
         //inflating frameLayout with main fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer,new MainFragment())

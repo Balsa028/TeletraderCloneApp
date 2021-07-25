@@ -1,5 +1,6 @@
 package com.balsa.teletraderentryapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.Models.NewsArticle;
 import com.balsa.teletraderentryapp.R;
 import com.bumptech.glide.Glide;
@@ -70,9 +72,11 @@ public class SingleNewsFragment extends Fragment {
                         Toast.makeText(getActivity(), "Kliknuto", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.home:
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new MainFragment())
-                                .commit();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+//                        getActivity().getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.fragmentContainer,new MainFragment())
+//                                .commit();
                         break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()

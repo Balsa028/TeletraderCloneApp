@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -45,9 +44,9 @@ public class MainFragment extends Fragment {
         // inicijalizacija pager adaptera
         pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager());
         //dodavanje fragmenata
-        pagerAdapter.addFragment(new FirstFragment(),"First");
-        pagerAdapter.addFragment(new SecondFragment(),"Second");
-        pagerAdapter.addFragment(new NewsFragment(),"Third");
+        pagerAdapter.addFragment(new ChgLastFragment(),"Change%/Last");
+        pagerAdapter.addFragment(new BidAskFragment(),"Bid/Ask,High/Low");
+     //   pagerAdapter.addFragment(new NewsFragment(),"Third");
 
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.MyInfoFragment">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+   <ImageView
+       android:id="@+id/imageView2"
+       android:layout_width="105dp"
+       android:layout_height="121dp"
+       android:layout_marginTop="8dp"
+       android:layout_marginEnd="8dp"
+       android:src="@mipmap/ic_launcher"
+       android:scaleType="centerCrop"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+
+   <TextView
+       android:id="@+id/textView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="8dp"
+       android:text="Balsa Pavlicevic"
+       android:textSize="17sp"
+       android:textStyle="bold"
+       app:layout_constraintEnd_toStartOf="@+id/imageView2"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       android:textColor="@color/white"/>
+
+   <TextView
+       android:id="@+id/textView2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:text="Date of Birth:"
+       android:textSize="11sp"
+       android:textColor="@color/white"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+   <TextView
+       android:id="@+id/textView3"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:text="27/11/1995"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView2"
+       app:layout_constraintStart_toEndOf="@+id/textView2"
+       app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+   <TextView
+       android:id="@+id/textView4"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:text="Address:"
+       android:textSize="11sp"
+       android:textColor="@color/white"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+   <TextView
+       android:id="@+id/textView5"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       android:text="Bulevar Oslobodjenja 47,Beograd"
+       app:layout_constraintBottom_toBottomOf="@+id/textView4"
+       app:layout_constraintStart_toEndOf="@+id/textView4"
+       app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+   <TextView
+       android:id="@+id/textView8"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:textSize="11sp"
+       android:textColor="@color/white"
+       android:text="Number:"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+   <TextView
+       android:id="@+id/textView9"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:text="0659746697"
+       android:textSize="11sp"
+       android:textColor="@color/white"
+       app:layout_constraintBottom_toBottomOf="@+id/textView8"
+       app:layout_constraintStart_toEndOf="@+id/textView8"
+       app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+   <TextView
+       android:id="@+id/textView10"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/white"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:textSize="11sp"
+       android:text="Email:"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+   <TextView
+       android:id="@+id/textView13"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/white"
+       android:layout_marginStart="8dp"
+       android:textSize="11sp"
+       android:text="Balsa028028@gmail.com"
+       app:layout_constraintBottom_toBottomOf="@+id/textView10"
+       app:layout_constraintStart_toEndOf="@+id/textView10"
+       app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_begin="170dp" />
+
+   <TextView
+       android:id="@+id/textView14"
+       android:layout_width="wrap_content"
+       android:textColor="@color/white"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="8dp"
+       android:text="Education"
+       android:textSize="17sp"
+       android:textStyle="bold"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.25"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+   <TextView
+       android:id="@+id/textView15"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:layout_marginTop="16dp"
+       android:textSize="11sp"
+       android:text="2010-2014 -"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+   <TextView
+       android:id="@+id/textView19"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       android:text="Medical school/Kosovska Mitrovica"
+       app:layout_constraintBottom_toBottomOf="@+id/textView15"
+       app:layout_constraintStart_toEndOf="@+id/textView15"
+       app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+   <TextView
+       android:id="@+id/textView20"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:textColor="@color/white"
+       android:text="2014-2017 -"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+   <TextView
+       android:id="@+id/textView21"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:text="Belgrade Faculty of Dentistry"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView20"
+       app:layout_constraintStart_toEndOf="@+id/textView20"
+       app:layout_constraintTop_toTopOf="@+id/textView20" />
+
+   <TextView
+       android:id="@+id/textView22"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:text="2018-2021 -"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+   <TextView
+       android:id="@+id/textView23"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:text="ITS Comtrade, Belgrade"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView22"
+       app:layout_constraintStart_toEndOf="@+id/textView22"
+       app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline6"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_begin="295dp" />
+
+   <TextView
+       android:id="@+id/textView24"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="8dp"
+       android:text="Projects"
+       android:textColor="@color/white"
+       android:textSize="17sp"
+       android:textStyle="bold"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.25"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+   <TextView
+       android:id="@+id/textView25"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="16dp"
+       android:textColor="@color/white"
+       android:text="WhatsAppClone:"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+   <TextView
+       android:id="@+id/textView26"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:layout_marginTop="8dp"
+       android:text="MovieApp:"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+   <TextView
+       android:id="@+id/textView27"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/white"
+       android:layout_marginStart="8dp"
+       android:text="https://github.com/Balsa028/MyWhatsApp"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView25"
+       app:layout_constraintStart_toEndOf="@+id/textView25"
+       app:layout_constraintTop_toTopOf="@+id/textView25" />
+
+   <TextView
+       android:id="@+id/textView28"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:text="https://github.com/Balsa028/MovieApp"
+       android:textSize="11sp"       app:layout_constraintBottom_toBottomOf="@+id/textView26"
+       app:layout_constraintStart_toEndOf="@+id/textView26"
+       app:layout_constraintTop_toTopOf="@+id/textView26" />
+
+   <TextView
+       android:id="@+id/textView29"
+       android:layout_width="wrap_content"
+       android:textColor="@color/white"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:text="https://github.com/Balsa028/Supermarket"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView30"
+       app:layout_constraintStart_toEndOf="@+id/textView30"
+       app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+   <TextView
+       android:id="@+id/textView30"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:layout_marginTop="8dp"
+       android:text="SupermarketApp:"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+   <TextView
+       android:id="@+id/textView31"
+       android:layout_width="wrap_content"
+       android:textColor="@color/white"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:text="https://github.com/Balsa028/GymApp"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView32"
+       app:layout_constraintStart_toEndOf="@+id/textView32"
+       app:layout_constraintTop_toTopOf="@+id/textView32" />
+
+   <TextView
+       android:id="@+id/textView32"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/white"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="8dp"
+       android:text="GymApp:"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+   <TextView
+       android:id="@+id/textView33"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:layout_marginTop="8dp"
+       android:text="TouristAgency:"
+       android:textSize="11sp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+   <TextView
+       android:id="@+id/textView34"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:text="https://github.com/Balsa028/TouristAgency"
+       android:textSize="11sp"
+       app:layout_constraintBottom_toBottomOf="@+id/textView33"
+       app:layout_constraintStart_toEndOf="@+id/textView33"
+       app:layout_constraintTop_toTopOf="@+id/textView33" />
+
+   <TextView
+       android:id="@+id/textView35"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="8dp"
+       android:text="Computer Skills"
+       android:textSize="17sp"
+       android:textColor="@color/white"
+       android:textStyle="bold"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.25"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline7"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_begin="473dp" />
+
+   <TextView
+       android:id="@+id/textView36"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginTop="16dp"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       android:text="-excellent knowledge of principles of object oriented programming"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+   <TextView
+       android:id="@+id/textView37"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:layout_marginTop="8dp"
+       android:textSize="11sp"
+       android:text="-work with C#, Java and PHP programming language"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+   <TextView
+       android:id="@+id/textView38"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:textSize="11sp"
+       android:layout_marginTop="8dp"
+       android:text="-knowledge and work with databases(sql)"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView37" />
+
+      <TextView
+          android:id="@+id/textView39"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginBottom="16dp"
+          android:text="work with Android Studio and its libraries(Retrofit,Jetpack(mvvm,room),Glide,Firebase,etc.)"
+          android:textColor="@color/white"
+          android:textSize="11sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+   <TextView
+       android:id="@+id/textView40"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:textColor="@color/white"
+       android:layout_marginTop="8dp"
+       android:textSize="11sp"
+       android:text="knowledge and understanding of Html,Css and Javascript"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/textView38" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+
+</FrameLayout>

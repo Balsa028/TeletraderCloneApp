@@ -1,15 +1,21 @@
 package com.balsa.teletraderentryapp.Adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.balsa.teletraderentryapp.Fragments.SymbolDetailsFragment;
 import com.balsa.teletraderentryapp.Models.Symbol;
 import com.balsa.teletraderentryapp.R;
 
@@ -70,8 +76,43 @@ public class BidAskSymbolAdapter extends RecyclerView.Adapter<BidAskSymbolAdapte
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 25.7.21. ODRADI OVO pavlicevicu
+                //kreiranje i punjenje bundle i slanje objekta simbola na sledeci fragment
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("selected_symbol",symbols.get(position));
+                SymbolDetailsFragment fragment = new SymbolDetailsFragment();
+                fragment.setArguments(bundle);
+                ((AppCompatActivity)context).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer,fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
+        holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //alert dialog za potvrdu brisanja
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Are you sure you want to delete selected symbol?")
+                        .setIcon(R.drawable.ic_delete)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                symbols.remove(symbols.get(position));
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "You have succesfully deleted symbol from list", Toast.LENGTH_SHORT).show();
+                            }
+                        }).setNegativeButton("No, Thanks", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setTitle("Deleting Symbol");
+                alertDialog.show();
+                return false;
             }
         });
     }

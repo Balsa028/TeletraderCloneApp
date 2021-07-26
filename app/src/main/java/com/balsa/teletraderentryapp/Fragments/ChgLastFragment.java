@@ -8,36 +8,34 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.balsa.teletraderentryapp.Adapters.SymbolAdapter;
 import com.balsa.teletraderentryapp.Models.Symbol;
 import com.balsa.teletraderentryapp.R;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class ChgLastFragment extends Fragment {
 
-//    private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private TextView txtSymbolName;
     private ImageView sortAsc, sortDesc;
     private RecyclerView symbolRecView;
@@ -57,16 +55,43 @@ public class ChgLastFragment extends Fragment {
         symbols = new ArrayList<>();
         symbolRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         symbolRecView.setAdapter(adapter);
+
         //setovanje swipe refresha i uzimanje podataka sa weba
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                new GetSymbolData().execute();
-//            }
-//        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.setSymbols(symbols);
+                Toast.makeText(getActivity(), "Refreshed", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        //implementacija sortiranja liste simbola
+        sortAsc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(symbols,new Symbol.SortByNameAsc());
+                adapter.setSymbols(symbols);
+            }
+        });
+        sortDesc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(symbols,new Symbol.SortByNameDesc());
+                adapter.setSymbols(symbols);
+            }
+        });
+
+        //klikom na Name dobija se defaultna lista podataka
+        txtSymbolName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(symbols,new Symbol.SortByTicker());
+                adapter.setSymbols(symbols);
+            }
+        });
 
         new GetSymbolData().execute();
-
         return view;
     }
 
@@ -93,6 +118,8 @@ public class ChgLastFragment extends Fragment {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
+            //sortiranje pred ubacivanje radi dobijanja "default-nog" pregleda liste simbola
+            Collections.sort(symbols,new Symbol.SortByTicker());
             adapter.setSymbols(symbols);
         }
 
@@ -178,6 +205,7 @@ public class ChgLastFragment extends Fragment {
             return parsedDate;
 
         }
+
         private void skipTag(XmlPullParser parser) throws XmlPullParserException, IOException {
             if(parser.getEventType() != XmlPullParser.START_TAG){
                 //u slucaju da nije start tag
@@ -199,6 +227,7 @@ public class ChgLastFragment extends Fragment {
             }
 
         }
+
         private InputStream getInputStream() {
             try {
                 URL url = new URL("https://www.teletrader.rs/downloads/tt_symbol_list.xml");
@@ -218,12 +247,11 @@ public class ChgLastFragment extends Fragment {
             return null;
         }
     }
-
     private void initViews(View view) {
-        txtSymbolName = view.findViewById(R.id.txtName);
+        txtSymbolName = view.findViewById(R.id.txtNameAsc);
         sortAsc = view.findViewById(R.id.imageAsc);
         sortDesc = view.findViewById(R.id.imageDesc);
         symbolRecView = view.findViewById(R.id.symbolsRecView);
-      //  swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
     }
 }

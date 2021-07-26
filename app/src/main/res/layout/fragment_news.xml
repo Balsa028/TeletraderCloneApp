@@ -27,12 +27,16 @@
                     android:id="@+id/txtBahaNews"
                     android:layout_marginBottom="5dp"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/newsRecView"
-                    android:layout_below="@id/txtBahaNews"
-                    />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/newsRecView"
+                        android:layout_below="@id/txtBahaNews"
+                        />
+
+
+
             </RelativeLayout>
         </ScrollView>
 

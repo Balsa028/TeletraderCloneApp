@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balsa.teletraderentryapp.GitHubActivity;
 import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.Models.Symbol;
 import com.balsa.teletraderentryapp.R;
@@ -28,6 +31,7 @@ public class SymbolDetailsFragment extends Fragment {
     private TextView txtSymbolName,txtTickerSymbol,txtLast,txtChange,txtChangePrecent,txtHigh,txtLow,
             txtDatetime,txtVolume,txtAsk,txtBid;
     private BottomNavigationView bottomNavigationView;
+    private Handler handler = new Handler();
     public SymbolDetailsFragment() {
         // Required empty public constructor
     }
@@ -49,17 +53,45 @@ public class SymbolDetailsFragment extends Fragment {
                 //----change
                 if(symbol.getChange() != null){
                     if(Float.parseFloat(symbol.getChange())>0){
-                        txtChange.setText("+"+symbol.getChange().substring(0,4));
+                        txtChange.setText("+"+symbol.getChange().substring(0,5));
                         txtChange.setTextColor(Color.GREEN);
                     }
                     else if(Float.parseFloat(symbol.getChange())<0){
-                        txtChange.setText(symbol.getChange().substring(0,4));
+                        txtChange.setText(symbol.getChange().substring(0,5));
                         txtChange.setTextColor(Color.RED);
                     }
                     else{
                         txtChange.setText(symbol.getChange());
                         txtChange.setTextColor(Color.WHITE);
                     }
+
+                    //--------------simulacija procenta
+
+                    //uzimanje vrednosti Change-a i castovanje u float
+                    String valueChange = symbol.getChange();
+                    float currentChangeValue = Float.parseFloat(valueChange);
+
+                    //handle klasa radi simulacije skokova i padova vrednosti u pozadini
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            double newChangeValue = getRandomValue(currentChangeValue);
+
+                            if(newChangeValue > 0){
+                                txtChange.setText("+"+String.valueOf(newChangeValue).substring(0,5));
+                                txtChange.setTextColor(Color.GREEN);
+                            }
+                            else if(newChangeValue < 0){
+                                txtChange.setText(String.valueOf(newChangeValue).substring(0,5));
+                                txtChange.setTextColor(Color.RED);
+                            }
+                            else {
+                                txtChange.setText(String.valueOf(newChangeValue).substring(0,4));
+                                txtChange.setTextColor(Color.WHITE);
+                            }
+                        }
+                    },getRandomMillis(3000,30000));
+
                 }
                 else{
                     txtChange.setText("None");
@@ -85,6 +117,33 @@ public class SymbolDetailsFragment extends Fragment {
                         txtLast.setText(symbol.getLast());
                         txtLast.setTextColor(Color.WHITE);
                     }
+
+                    //--------------simulacija procenta
+
+                        //uzimanje vrednosti Change-a i castovanje u float
+                        String valueChange = symbol.getChangePrecent();
+                        float currentChangeValue = Float.parseFloat(valueChange);
+
+                        //handle klasa radi simulacije skokova i padova vrednosti u pozadini
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                double newChangeValue = getRandomValue(currentChangeValue);
+
+                                if(newChangeValue > 0){
+                                    txtChangePrecent.setText("+"+String.valueOf(newChangeValue).substring(0,4)+"%");
+                                    txtChangePrecent.setTextColor(Color.GREEN);
+                                }
+                                else if(newChangeValue < 0){
+                                    txtChangePrecent.setText(String.valueOf(newChangeValue).substring(0,5)+"%");
+                                    txtChangePrecent.setTextColor(Color.RED);
+                                }
+                                else {
+                                    txtChangePrecent.setText(String.valueOf(newChangeValue).substring(0,4)+"%");
+                                    txtChangePrecent.setTextColor(Color.WHITE);
+                                }
+                            }
+                        },getRandomMillis(3000,30000));
                 }
                 else{
                     txtChangePrecent.setText("None");
@@ -94,6 +153,46 @@ public class SymbolDetailsFragment extends Fragment {
                     txtLast.setText("None");
                     txtLast.setTextColor(Color.WHITE);
                 }
+
+                //--------simulacija Last vrednosti
+
+                //uzimanje vrednosti Last-a i castovanje u float
+                String value = txtLast.getText().toString();
+                float currentLastValue = Float.parseFloat(value);
+
+                //handle klasa radi simulacije skokova i padova vrednosti u pozadini
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        double newLastValue = getRandomValue(currentLastValue);
+
+                        if(newLastValue-currentLastValue >= 0){
+                            if(String.valueOf(newLastValue).length()>=9){
+                                txtLast.setText(String.valueOf(newLastValue).substring(0,9));
+                                txtLast.setBackgroundColor(getActivity().getResources().getColor(R.color.stocks_up));
+                            }
+                        }
+                        else{
+                            if (String.valueOf(newLastValue).length()>=9){
+                                txtLast.setText(String.valueOf(newLastValue).substring(0,9));
+                                txtLast.setBackgroundColor(getActivity().getResources().getColor(R.color.stocks_down));
+                            }
+                        }
+                        // za vracanje pozadine na crnu boju posle 2 sekunde
+                        new CountDownTimer(2000,500){
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+
+                            }
+                            @Override
+                            public void onFinish() {
+                                txtLast.setBackgroundColor(Color.BLACK);
+                            }
+                        }.start();
+                    }
+                },getRandomMillis(3000,30000));
+
                 //-------high
                 if(symbol.getHigh() != null){
                     txtHigh.setText(symbol.getHigh());
@@ -141,7 +240,18 @@ public class SymbolDetailsFragment extends Fragment {
         }
         return view;
     }
-
+    //funkcija za dobijanje random millisekundi izmedju unetih parametra
+    private Long getRandomMillis(int a, int b){
+        double millis = Math.random() * (b-a) + a;
+        return Math.round(millis);
+    }
+    //funkcija koja na osnovu proslednjenog float broja nalazi nasumican broj izmedju -20% i +20% od prosledjenog float-a
+    private double getRandomValue(float number){
+        double lower = number-(number*0.2); //max
+        double upper = number+(number*0.2); //min
+        String newLastValue = String.valueOf(Math.random() * (upper-lower) + lower);
+        return Double.parseDouble(newLastValue);
+    }
     private void initViews(View view) {
         txtSymbolName = view.findViewById(R.id.txtSymbolNameDetails);
         txtTickerSymbol = view.findViewById(R.id.txtTickerSymbolDetails);
@@ -162,8 +272,9 @@ public class SymbolDetailsFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.primer1:
-                        Toast.makeText(getActivity(), "Kliknuto", Toast.LENGTH_SHORT).show();
+                    case R.id.web:
+                        Intent webintent = new Intent(getActivity(), GitHubActivity.class);
+                        startActivity(webintent);
                         break;
                     case R.id.home:
                         Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -172,6 +283,7 @@ public class SymbolDetailsFragment extends Fragment {
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentContainer,new NewsFragment())
+                                .addToBackStack(null)
                                 .commit();
                         break;
                     default:

@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/relativeLayout2"
+                android:id="@+id/relativeLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/txtNameAsc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -41,10 +41,10 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:layout_toRightOf="@id/txtName"
-                    android:src="@drawable/ic_arrow_up"
+                    android:layout_toRightOf="@id/txtNameAsc"
+                    android:src="@drawable/ic_arrow_up_bolded"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/txtName"
+                    app:layout_constraintStart_toEndOf="@id/txtNameAsc"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -55,7 +55,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
                     android:layout_toRightOf="@id/imageAsc"
-                    android:src="@drawable/ic_arrow_down"
+                    android:src="@drawable/ic_arrow_down_bolded"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/imageAsc"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -85,14 +85,19 @@
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
+                    app:layout_constraintEnd_toEndOf="@+id/relativeLayout3"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="match_parent"-->
-            <!--            android:id="@+id/swipeRefresh">-->
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/symbolsRecView"
@@ -101,8 +106,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
-            <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout3" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

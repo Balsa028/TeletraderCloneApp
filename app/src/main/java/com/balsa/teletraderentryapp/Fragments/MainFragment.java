@@ -1,5 +1,6 @@
 package com.balsa.teletraderentryapp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.balsa.teletraderentryapp.GitHubActivity;
+import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -46,9 +50,9 @@ public class MainFragment extends Fragment {
         //dodavanje fragmenata
         pagerAdapter.addFragment(new ChgLastFragment(),"Change%/Last");
         pagerAdapter.addFragment(new BidAskFragment(),"Bid/Ask,High/Low");
-     //   pagerAdapter.addFragment(new NewsFragment(),"Third");
 
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(1);
         tabLayout.setupWithViewPager(viewPager);
         initBottomNavigationView();
 
@@ -61,8 +65,9 @@ public class MainFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.primer1:
-                        Toast.makeText(getActivity(), "Kliknuto", Toast.LENGTH_SHORT).show();
+                    case R.id.web:
+                        Intent intent = new Intent(getActivity(), GitHubActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.home:
                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -106,7 +111,14 @@ public class MainFragment extends Fragment {
         @NotNull
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            switch (position){
+                case 0:
+                    return new ChgLastFragment();
+                case 1:
+                    return new BidAskFragment();
+                default:
+                    return null;
+            }
         }
 
         @Override

@@ -5,12 +5,15 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.balsa.teletraderentryapp.Fragments.MainFragment;
+import com.balsa.teletraderentryapp.Fragments.MyInfoFragment;
 import com.balsa.teletraderentryapp.Fragments.NewsFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,11 +49,9 @@ public class MainActivity extends AppCompatActivity {
         //inflating frameLayout with main fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer,new MainFragment())
+                .addToBackStack(null)
                 .commit();
-
     }
-
-
 
     private void initNavigationView() {
 
@@ -59,14 +60,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull MenuItem item) {
                 // TODO: 23.7.21. Finish here
                 switch (item.getItemId()){
-                    case R.id.prvi:
-                        //logic
+                    case R.id.myCV:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentContainer,new MyInfoFragment())
+                                .commit();
+                        drawer.closeDrawers();
                         break;
-                    case R.id.drugi:
-                        //logic
-                        break;
-                    case R.id.treci:
-                        //logic
+                    case R.id.myGitHub:
+                        Intent intent = new Intent(MainActivity.this, GitHubActivity.class);
+                        startActivity(intent);
+                        drawer.closeDrawers();
                         break;
                     default:
                         break;
@@ -74,6 +77,17 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
     private void initViews() {

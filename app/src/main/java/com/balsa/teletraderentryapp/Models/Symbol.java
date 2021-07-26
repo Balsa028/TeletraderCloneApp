@@ -3,6 +3,7 @@ package com.balsa.teletraderentryapp.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Comparator;
 import java.util.Date;
 
 public class Symbol implements Parcelable {
@@ -193,5 +194,27 @@ public class Symbol implements Parcelable {
         dest.writeString(volume);
         dest.writeString(change);
         dest.writeString(changePrecent);
+    }
+
+    //klasa koja implementira comparator interfejs radi sortiranja niza u rastucem redosledu A-Z
+    public static class SortByNameAsc implements Comparator<Symbol>{
+        @Override
+        public int compare(Symbol o1, Symbol o2) {
+            return o1.getSymbolName().compareTo(o2.getSymbolName());
+        }
+    }
+    //klasa koja implementira comparator interfejs radi sortiranja niza u opadajucem redosledu Z-A
+     public static class SortByNameDesc implements Comparator<Symbol>{
+        @Override
+        public int compare(Symbol o1, Symbol o2) {
+            return o2.getSymbolName().compareTo(o1.getSymbolName());
+        }
+    }
+        //zbog vremena odlucio sam da napravim treci comparator kao DEFAULT vrednosti liste simbola
+    public static class SortByTicker implements  Comparator<Symbol>{
+        @Override
+        public int compare(Symbol o1, Symbol o2) {
+            return o1.getTickerSymbol().compareTo(o2.getTickerSymbol());
+        }
     }
 }

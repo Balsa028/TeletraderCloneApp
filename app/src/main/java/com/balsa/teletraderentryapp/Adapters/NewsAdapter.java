@@ -1,7 +1,12 @@
 package com.balsa.teletraderentryapp.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.UrlQuerySanitizer;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,10 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
@@ -44,6 +53,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull @NotNull NewsAdapter.ViewHolder holder, int position) {
 
         holder.headline.setText(news.get(position).getHeadline());
+
+        //Odradio sam ovako sto sam bolje umeo , medjutim jako se sporo ucitava,pa sam vratio Glide
+//        new DownloadImageTask(holder.newsImage)
+//                .execute("https://cdn.ttweb.net/News/images/"+news.get(position).getImageId()+".jpg?preset=w220_q40");
         Glide.with(context)
                 .asBitmap()
                 .centerCrop()
@@ -63,7 +76,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 ((AppCompatActivity)context).getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragmentContainer,fragment)
-                        .addToBackStack("tag")
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -74,7 +87,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public int getItemCount() {
         return news.size();
     }
-
 
     //setter for array
     public void setNews(ArrayList<NewsArticle> news) {
@@ -95,4 +107,29 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             newsImage = itemView.findViewById(R.id.imageNewsItem);
         }
     }
+
+//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+//        ImageView bitmapImage;
+//
+//        public DownloadImageTask(ImageView bitmapImage) {
+//            this.bitmapImage = bitmapImage;
+//        }
+//
+//        protected Bitmap doInBackground(String... urls) {
+//            String url = urls[0];
+//            Bitmap bitmap = null;
+//            try {
+//                InputStream in = new java.net.URL(url).openStream();
+//                bitmap = BitmapFactory.decodeStream(in);
+//            } catch (Exception e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
+//            return bitmap;
+//        }
+//
+//        protected void onPostExecute(Bitmap result) {
+//            bitmapImage.setImageBitmap(result);
+//        }
+//    }
 }

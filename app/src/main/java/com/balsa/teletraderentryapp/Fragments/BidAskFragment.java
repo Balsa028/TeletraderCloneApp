@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.balsa.teletraderentryapp.Adapters.BidAskSymbolAdapter;
 import com.balsa.teletraderentryapp.Adapters.SymbolAdapter;
@@ -32,11 +33,12 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class BidAskFragment extends Fragment {
 
-    //private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private TextView txtSymbolName;
     private ImageView sortAsc, sortDesc;
     private RecyclerView symbolRecView;
@@ -56,16 +58,42 @@ public class BidAskFragment extends Fragment {
         symbols = new ArrayList<>();
         symbolRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         symbolRecView.setAdapter(adapter);
-//        //refreshovanje recycler viewa sa podatcima
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                new GetSymbolData().execute();
-//            }
-//        });
+        //refreshovanje recycler viewa sa podatcima
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.setSymbols(symbols);
+                Toast.makeText(getActivity(), "Refreshed", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        //implementacija sortiranja liste simbola
+        sortAsc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(symbols,new Symbol.SortByNameAsc());
+                adapter.setSymbols(symbols);
+            }
+        });
+        sortDesc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(symbols,new Symbol.SortByNameDesc());
+                adapter.setSymbols(symbols);
+            }
+        });
+
+        //klikom na Name dobija se defaultna lista podataka
+        txtSymbolName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Collections.sort(symbols,new Symbol.SortByTicker());
+                adapter.setSymbols(symbols);
+            }
+        });
 
         new GetSymbolData().execute();
-
         return view;
     }
     private class GetSymbolData extends AsyncTask<Void,Void,Void> {
@@ -90,6 +118,8 @@ public class BidAskFragment extends Fragment {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
+            //sortiranje pred ubacivanje radi dobijanja "default-nog" pregleda liste simbola
+            Collections.sort(symbols,new Symbol.SortByTicker());
             adapter.setSymbols(symbols);
         }
 
@@ -220,6 +250,6 @@ public class BidAskFragment extends Fragment {
         sortAsc = view.findViewById(R.id.imageAscending);
         sortDesc = view.findViewById(R.id.imageDescending);
         symbolRecView = view.findViewById(R.id.RecViewBidAsk);
-       //swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLay);
+       swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLay);
     }
 }

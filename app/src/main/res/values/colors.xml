@@ -13,4 +13,6 @@
     <color name="light_grey">#2E2D2D</color>
     <color name="svetlo_siva">#6F6C6C</color>
     <color name="dirty_white">#BBB9B9</color>
+    <color name="stocks_up">#8022FF2A</color>
+    <color name="stocks_down">#80FF0000</color>
 </resources>

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balsa.teletraderentryapp.Adapters.NewsAdapter;
+import com.balsa.teletraderentryapp.GitHubActivity;
 import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.Models.NewsArticle;
 import com.balsa.teletraderentryapp.R;
@@ -53,7 +55,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-
+        //initializing
         news = new ArrayList<>();
         bottomNavigationView = view.findViewById(R.id.bottomNavViewNews);
         newsRecView = view.findViewById(R.id.newsRecView);
@@ -61,9 +63,10 @@ public class NewsFragment extends Fragment {
         adapter = new NewsAdapter(getActivity());
         newsRecView.setAdapter(adapter);
         initBottomNavigationView();
+
+
         //pozivanje async taska
         new GetNews().execute();
-
         return view;
     }
 
@@ -162,7 +165,6 @@ public class NewsFragment extends Fragment {
 
                                     }
                                 }
-
                             }
                             else{
                                 skipTag(parser);
@@ -237,19 +239,18 @@ public class NewsFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.primer1:
-                        Toast.makeText(getActivity(), "Kliknuto", Toast.LENGTH_SHORT).show();
+                    case R.id.web:
+                        Intent webintent = new Intent(getActivity(), GitHubActivity.class);
+                        startActivity(webintent);
                         break;
                     case R.id.home:
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
-//                        getActivity().getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.fragmentContainer,new MainFragment())
-//                                .commit();
-//                        break;
+                       break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentContainer,new NewsFragment())
+                                .addToBackStack(null)
                                 .commit();
                         break;
                     default:

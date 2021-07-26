@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balsa.teletraderentryapp.GitHubActivity;
 import com.balsa.teletraderentryapp.MainActivity;
 import com.balsa.teletraderentryapp.Models.NewsArticle;
 import com.balsa.teletraderentryapp.R;
@@ -51,6 +52,8 @@ public class SingleNewsFragment extends Fragment {
                 String date = newsArticle.getDateTime().substring(0,10);
                 txtDate.setText(date);
                 txtAuthor.setText(newsArticle.getAuthor());
+
+                //pokusao sam odraditi sa BitmapFactory kao sto je zakomentarisano u NewsFragment-u ,ali jako je lose
                 Glide.with(getActivity())
                         .asBitmap()
                         .load("https://cdn.ttweb.net/News/images/"+newsArticle.getImageId()+".jpg?preset=w320_q50")
@@ -68,8 +71,9 @@ public class SingleNewsFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.primer1:
-                        Toast.makeText(getActivity(), "Kliknuto", Toast.LENGTH_SHORT).show();
+                    case R.id.web:
+                        Intent webintent = new Intent(getActivity(), GitHubActivity.class);
+                        startActivity(webintent);
                         break;
                     case R.id.home:
                         Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -81,6 +85,7 @@ public class SingleNewsFragment extends Fragment {
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentContainer,new NewsFragment())
+                                .addToBackStack(null)
                                 .commit();
                         break;
                     default:

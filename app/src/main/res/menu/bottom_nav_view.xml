@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item
-    android:id="@+id/primer1"
-    android:icon="@mipmap/teletrader"
-    android:title="Primer"/>
+    android:id="@+id/web"
+    android:icon="@drawable/ic_github2"
+    android:title="Github"/>
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home"

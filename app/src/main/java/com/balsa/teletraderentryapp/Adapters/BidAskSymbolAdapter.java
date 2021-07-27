@@ -27,6 +27,7 @@ public class BidAskSymbolAdapter extends RecyclerView.Adapter<BidAskSymbolAdapte
 
     private ArrayList<Symbol> symbols = new ArrayList<>();
     private Context context;
+
     public BidAskSymbolAdapter(Context context) {
         this.context = context;
     }
@@ -35,7 +36,7 @@ public class BidAskSymbolAdapter extends RecyclerView.Adapter<BidAskSymbolAdapte
     @NotNull
     @Override
     public BidAskViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.symbol_bid_list_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.symbol_bid_list_item, parent, false);
         return new BidAskViewHolder(view);
     }
 
@@ -45,31 +46,27 @@ public class BidAskSymbolAdapter extends RecyclerView.Adapter<BidAskSymbolAdapte
 
         holder.txtSymbolName.setText(symbols.get(position).getSymbolName());
         //null checks
-        if(symbols.get(position).getBid() != null){
+        if (symbols.get(position).getBid() != null) {
             holder.txtSymbolBid.setText(symbols.get(position).getBid());
-        }
-        else{
+        } else {
             holder.txtSymbolBid.setText("-");
         }
 
-        if(symbols.get(position).getAsk() != null){
+        if (symbols.get(position).getAsk() != null) {
             holder.txtSymbolAsk.setText(symbols.get(position).getAsk());
-        }
-        else{
+        } else {
             holder.txtSymbolBid.setText("-");
         }
 
-        if(symbols.get(position).getHigh() != null){
+        if (symbols.get(position).getHigh() != null) {
             holder.txtSymbolHigh.setText(symbols.get(position).getHigh());
-        }
-        else{
+        } else {
             holder.txtSymbolBid.setText("-");
         }
 
-        if(symbols.get(position).getLow() != null){
+        if (symbols.get(position).getLow() != null) {
             holder.txtSymbolLow.setText(symbols.get(position).getLow());
-        }
-        else{
+        } else {
             holder.txtSymbolBid.setText("-");
         }
 
@@ -78,12 +75,12 @@ public class BidAskSymbolAdapter extends RecyclerView.Adapter<BidAskSymbolAdapte
             public void onClick(View v) {
                 //kreiranje i punjenje bundle i slanje objekta simbola na sledeci fragment
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("selected_symbol",symbols.get(position));
+                bundle.putParcelable("selected_symbol", symbols.get(position));
                 SymbolDetailsFragment fragment = new SymbolDetailsFragment();
                 fragment.setArguments(bundle);
-                ((AppCompatActivity)context).getSupportFragmentManager()
+                ((AppCompatActivity) context).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragmentContainer,fragment)
+                        .replace(R.id.fragmentContainer, fragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -127,9 +124,9 @@ public class BidAskSymbolAdapter extends RecyclerView.Adapter<BidAskSymbolAdapte
         notifyDataSetChanged();
     }
 
-    public class BidAskViewHolder extends RecyclerView.ViewHolder{
+    public class BidAskViewHolder extends RecyclerView.ViewHolder {
         private CardView parent;
-        private TextView txtSymbolName,txtSymbolBid,txtSymbolHigh,txtSymbolAsk,txtSymbolLow;
+        private TextView txtSymbolName, txtSymbolBid, txtSymbolHigh, txtSymbolAsk, txtSymbolLow;
 
         public BidAskViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);

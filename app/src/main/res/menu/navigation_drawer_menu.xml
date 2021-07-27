@@ -5,12 +5,10 @@
     <item
         android:id="@+id/myCV"
         android:icon="@drawable/ic_info2"
-        android:title="My Infomation"
-        />
+        android:title="My Infomation" />
     <item
         android:id="@+id/myGitHub"
         android:icon="@drawable/ic_github2"
-        android:title="My GitHub"
-        />
+        android:title="My GitHub" />
 
 </menu>

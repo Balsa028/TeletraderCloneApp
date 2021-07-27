@@ -45,7 +45,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_list_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -60,7 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         Glide.with(context)
                 .asBitmap()
                 .centerCrop()
-                .load("https://cdn.ttweb.net/News/images/"+news.get(position).getImageId()+".jpg?preset=w220_q40")  //https://cdn.ttweb.net/News/images/145854.jpg?preset=w220_q40
+                .load("https://cdn.ttweb.net/News/images/" + news.get(position).getImageId() + ".jpg?preset=w220_q40")  //https://cdn.ttweb.net/News/images/145854.jpg?preset=w220_q40
                 .into(holder.newsImage);
 
         //making onClick listener for each item/card
@@ -71,11 +71,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 //pravljenje bundle radi prenosa podataka sa fragmenta na fragment
                 SingleNewsFragment fragment = new SingleNewsFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("news_article",news.get(position));
+                bundle.putParcelable("news_article", news.get(position));
                 fragment.setArguments(bundle);
-                ((AppCompatActivity)context).getSupportFragmentManager()
+                ((AppCompatActivity) context).getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragmentContainer,fragment)
+                        .replace(R.id.fragmentContainer, fragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -94,7 +94,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private CardView parent;
         private TextView headline;

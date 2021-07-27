@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.light_blue));
         //kreiranje drawerToggla
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.drawer_closed,R.string.drawer_opened);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_closed, R.string.drawer_opened);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.toggle_color));
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inflating frameLayout with main fragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer,new MainFragment())
+                .replace(R.id.fragmentContainer, new MainFragment())
                 .addToBackStack(null)
                 .commit();
     }
@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull @org.jetbrains.annotations.NotNull MenuItem item) {
                 // TODO: 23.7.21. Finish here
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.myCV:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new MyInfoFragment())
+                                .replace(R.id.fragmentContainer, new MyInfoFragment())
                                 .commit();
                         drawer.closeDrawers();
                         break;

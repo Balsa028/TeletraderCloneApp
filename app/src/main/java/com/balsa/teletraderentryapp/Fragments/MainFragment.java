@@ -48,8 +48,8 @@ public class MainFragment extends Fragment {
         // inicijalizacija pager adaptera
         pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager());
         //dodavanje fragmenata
-        pagerAdapter.addFragment(new ChgLastFragment(),"Change%/Last");
-        pagerAdapter.addFragment(new BidAskFragment(),"Bid/Ask,High/Low");
+        pagerAdapter.addFragment(new ChgLastFragment(), "Change%/Last");
+        pagerAdapter.addFragment(new BidAskFragment(), "Bid/Ask,High/Low");
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
@@ -64,19 +64,19 @@ public class MainFragment extends Fragment {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.web:
                         Intent intent = new Intent(getActivity(), GitHubActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.home:
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new MainFragment())
+                                .replace(R.id.fragmentContainer, new MainFragment())
                                 .commit();
                         break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new NewsFragment())
+                                .replace(R.id.fragmentContainer, new NewsFragment())
                                 .commit();
                         break;
                     default:
@@ -111,7 +111,7 @@ public class MainFragment extends Fragment {
         @NotNull
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new ChgLastFragment();
                 case 1:
@@ -126,7 +126,7 @@ public class MainFragment extends Fragment {
             return fragments.size();
         }
 
-        public void addFragment(Fragment fragment , String title){
+        public void addFragment(Fragment fragment, String title) {
             fragments.add(fragment);
             titles.add(title);
         }

@@ -30,7 +30,7 @@ public class SingleNewsFragment extends Fragment {
 
     private ImageView image;
     private BottomNavigationView bottomNavigationView;
-    private TextView txtHeadlineOver,txtDate,txtAuthor;
+    private TextView txtHeadlineOver, txtDate, txtAuthor;
 
     public SingleNewsFragment() {
         // Required empty public constructor
@@ -43,20 +43,20 @@ public class SingleNewsFragment extends Fragment {
         initViews(view);
         //preuzima se dolazeci bundle i proverava da li ima podataka u njemu
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             NewsArticle newsArticle = bundle.getParcelable("news_article");
-            if(newsArticle != null){
+            if (newsArticle != null) {
                 //setovanje podataka na trenutni fragment
                 txtHeadlineOver.setText(newsArticle.getHeadline());
                 //potrudicu se da ispravim ako stignem :)
-                String date = newsArticle.getDateTime().substring(0,10);
+                String date = newsArticle.getDateTime().substring(0, 10);
                 txtDate.setText(date);
                 txtAuthor.setText(newsArticle.getAuthor());
 
                 //pokusao sam odraditi sa BitmapFactory kao sto je zakomentarisano u NewsFragment-u ,ali jako je lose
                 Glide.with(getActivity())
                         .asBitmap()
-                        .load("https://cdn.ttweb.net/News/images/"+newsArticle.getImageId()+".jpg?preset=w320_q50")
+                        .load("https://cdn.ttweb.net/News/images/" + newsArticle.getImageId() + ".jpg?preset=w320_q50")
                         .into(image);
             }
         }
@@ -70,7 +70,7 @@ public class SingleNewsFragment extends Fragment {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.web:
                         Intent webintent = new Intent(getActivity(), GitHubActivity.class);
                         startActivity(webintent);
@@ -84,7 +84,7 @@ public class SingleNewsFragment extends Fragment {
                         break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new NewsFragment())
+                                .replace(R.id.fragmentContainer, new NewsFragment())
                                 .addToBackStack(null)
                                 .commit();
                         break;
@@ -96,6 +96,7 @@ public class SingleNewsFragment extends Fragment {
             }
         });
     }
+
     private void initViews(View view) {
         image = view.findViewById(R.id.singleNewsImage);
         txtHeadlineOver = view.findViewById(R.id.txtHeadlineOver);

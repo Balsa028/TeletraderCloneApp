@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.balsa.teletraderentryapp.FirstFragment"
+        android:name="com.balsa.teletraderentryapp.Fragments.ChgLastFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_last_chg">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.balsa.teletraderentryapp.SecondFragment"
+        android:name="com.balsa.teletraderentryapp.Fragments.BidAskFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_ask_bid">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

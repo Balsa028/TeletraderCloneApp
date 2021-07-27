@@ -71,13 +71,13 @@ public class NewsFragment extends Fragment {
     }
 
     //async task gde je logika fetchovanja podataka sa Xml-a
-    private class GetNews extends AsyncTask<Void,Void,Void>{
+    private class GetNews extends AsyncTask<Void, Void, Void> {
 
 
         @Override
         protected Void doInBackground(Void... voids) {
             InputStream inputStream = getInputStream();
-            if(inputStream != null){
+            if (inputStream != null) {
                 try {
                     initXmlPullParser(inputStream);
                 } catch (XmlPullParserException | IOException e) {
@@ -95,85 +95,82 @@ public class NewsFragment extends Fragment {
 
         private void initXmlPullParser(InputStream inputStream) throws XmlPullParserException, IOException {
             XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,false);
-            parser.setInput(inputStream,null);
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(inputStream, null);
             parser.next();
 
-            parser.require(XmlPullParser.START_TAG,null,"Result");
-            while(parser.next() != XmlPullParser.END_TAG){
+            parser.require(XmlPullParser.START_TAG, null, "Result");
+            while (parser.next() != XmlPullParser.END_TAG) {
                 //ovaj uslov stavljam da bi izbegao meta data i dosao do podataka koji mi trebaju
-                if(parser.getEventType() != XmlPullParser.START_TAG){
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
                     continue;
                 }
 
-                parser.require(XmlPullParser.START_TAG,null,"NewsList");
-                while (parser.next() != XmlPullParser.END_TAG){
-                    if(parser.getEventType() != XmlPullParser.START_TAG){
+                parser.require(XmlPullParser.START_TAG, null, "NewsList");
+                while (parser.next() != XmlPullParser.END_TAG) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
                         continue;
                     }
 
                     //parser.getName vraca trenutni tag
-                    if(parser.getName().equals("NewsArticle")){
-                        parser.require(XmlPullParser.START_TAG,null,"NewsArticle");
+                    if (parser.getName().equals("NewsArticle")) {
+                        parser.require(XmlPullParser.START_TAG, null, "NewsArticle");
                         //definisanje polja koja moram popuniti radi kreiranja klase NewsArticle
                         String headline = "";
-                        String author = parser.getAttributeValue(null,"author");
-                        String date = parser.getAttributeValue(null,"dateTime");;
-                        String id = parser.getAttributeValue(null,"id");;
+                        String author = parser.getAttributeValue(null, "author");
+                        String date = parser.getAttributeValue(null, "dateTime");
+                        ;
+                        String id = parser.getAttributeValue(null, "id");
+                        ;
                         String imageID = "";
 
-                        while(parser.next() != XmlPullParser.END_TAG){
-                            if(parser.getEventType() != XmlPullParser.START_TAG){
+                        while (parser.next() != XmlPullParser.END_TAG) {
+                            if (parser.getEventType() != XmlPullParser.START_TAG) {
                                 continue;
                             }
                             String tag = parser.getName();
-                            if(tag.equals("Headline")){
-                                headline = getContent(parser,"Headline");
-                            }
-                            else if(tag.equals("Tags")){
-                                parser.require(XmlPullParser.START_TAG,null,"Tags");
-                                while(parser.next() != XmlPullParser.END_TAG){
-                                    if(parser.getEventType() != XmlPullParser.START_TAG){
+                            if (tag.equals("Headline")) {
+                                headline = getContent(parser, "Headline");
+                            } else if (tag.equals("Tags")) {
+                                parser.require(XmlPullParser.START_TAG, null, "Tags");
+                                while (parser.next() != XmlPullParser.END_TAG) {
+                                    if (parser.getEventType() != XmlPullParser.START_TAG) {
                                         continue;
                                     }
-                                    parser.require(XmlPullParser.START_TAG,null,"Tag");
-                                    while(parser.next() != XmlPullParser.END_TAG){
-                                        if(parser.getEventType() != XmlPullParser.START_TAG){
+                                    parser.require(XmlPullParser.START_TAG, null, "Tag");
+                                    while (parser.next() != XmlPullParser.END_TAG) {
+                                        if (parser.getEventType() != XmlPullParser.START_TAG) {
                                             continue;
                                         }
                                         //provera u slucaju kad se naidje na Tag koji ne sadrzi PicTT vec Simbole
-                                        if(parser.getName().equals("PicTT")){
+                                        if (parser.getName().equals("PicTT")) {
 
-                                            parser.require(XmlPullParser.START_TAG,null,"PicTT");
-                                            while(parser.next() != XmlPullParser.END_TAG){
+                                            parser.require(XmlPullParser.START_TAG, null, "PicTT");
+                                            while (parser.next() != XmlPullParser.END_TAG) {
 
-                                                if(parser.getEventType() != XmlPullParser.START_TAG){
+                                                if (parser.getEventType() != XmlPullParser.START_TAG) {
                                                     continue;
                                                 }
                                                 String tagName = parser.getName();
-                                                if(tagName.equals("ImageID")){
-                                                    imageID = getContent(parser,"ImageID");
-                                                }
-                                                else{
+                                                if (tagName.equals("ImageID")) {
+                                                    imageID = getContent(parser, "ImageID");
+                                                } else {
                                                     skipTag(parser);
                                                 }
                                             }
-                                        }
-                                       else{
-                                           skipTag(parser);
+                                        } else {
+                                            skipTag(parser);
                                         }
 
                                     }
                                 }
-                            }
-                            else{
+                            } else {
                                 skipTag(parser);
                             }
                         }
-                        NewsArticle newsArticle = new NewsArticle(id,author,date,headline,imageID);
+                        NewsArticle newsArticle = new NewsArticle(id, author, date, headline, imageID);
                         news.add(newsArticle);
-                    }
-                    else{
+                    } else {
                         skipTag(parser);
                     }
                 }
@@ -181,49 +178,52 @@ public class NewsFragment extends Fragment {
 
 
         }
+
         //funkcija za preskakanje nepotrebnih tagova
         private void skipTag(XmlPullParser parser) throws XmlPullParserException, IOException {
-            if(parser.getEventType() != XmlPullParser.START_TAG){
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
                 //u slucaju da nije start tag
                 throw new IllegalStateException();
             }
 
             int number = 1;
-            while(number != 0){
-                switch (parser.next()){
+            while (number != 0) {
+                switch (parser.next()) {
                     case XmlPullParser.START_TAG:
                         number++;
                         break;
-                        case XmlPullParser.END_TAG:
-                            number--;
-                            break;
+                    case XmlPullParser.END_TAG:
+                        number--;
+                        break;
                     default:
                         break;
                 }
             }
 
         }
+
         //funkcija za uzimanje podataka  izmedju tagova
-        private String getContent (XmlPullParser parser , String tagName) throws IOException, XmlPullParserException {
+        private String getContent(XmlPullParser parser, String tagName) throws IOException, XmlPullParserException {
             String result = "";
-            parser.require(XmlPullParser.START_TAG,null,tagName);
-            if(parser.next() == XmlPullParser.TEXT){
+            parser.require(XmlPullParser.START_TAG, null, tagName);
+            if (parser.next() == XmlPullParser.TEXT) {
                 result = parser.getText();
                 parser.next();
             }
             return result;
         }
-        private InputStream getInputStream(){
+
+        private InputStream getInputStream() {
             try {
                 URL url = new URL("https://www.teletrader.rs/downloads/tt_news_list.xml");
                 //autentikator zbog povlacenja podataka radi kojih treba autorizacija u suprotnom se dobija exception
                 Authenticator.setDefault(new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("android_tt","Sk3M!@p9e".toCharArray());
+                        return new PasswordAuthentication("android_tt", "Sk3M!@p9e".toCharArray());
                     }
                 });
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
                 return connection.getInputStream();
@@ -233,12 +233,13 @@ public class NewsFragment extends Fragment {
             return null;
         }
     }
+
     private void initBottomNavigationView() {
         bottomNavigationView.setSelectedItemId(R.id.news);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.web:
                         Intent webintent = new Intent(getActivity(), GitHubActivity.class);
                         startActivity(webintent);
@@ -246,10 +247,10 @@ public class NewsFragment extends Fragment {
                     case R.id.home:
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
-                       break;
+                        break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new NewsFragment())
+                                .replace(R.id.fragmentContainer, new NewsFragment())
                                 .addToBackStack(null)
                                 .commit();
                         break;

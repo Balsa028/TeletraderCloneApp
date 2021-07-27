@@ -19,8 +19,10 @@ import android.widget.Toast;
 import com.balsa.teletraderentryapp.Adapters.SymbolAdapter;
 import com.balsa.teletraderentryapp.Models.Symbol;
 import com.balsa.teletraderentryapp.R;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Authenticator;
@@ -70,14 +72,14 @@ public class ChgLastFragment extends Fragment {
         sortAsc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(symbols,new Symbol.SortByNameAsc());
+                Collections.sort(symbols, new Symbol.SortByNameAsc());
                 adapter.setSymbols(symbols);
             }
         });
         sortDesc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(symbols,new Symbol.SortByNameDesc());
+                Collections.sort(symbols, new Symbol.SortByNameDesc());
                 adapter.setSymbols(symbols);
             }
         });
@@ -86,7 +88,7 @@ public class ChgLastFragment extends Fragment {
         txtSymbolName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Collections.sort(symbols,new Symbol.SortByTicker());
+                Collections.sort(symbols, new Symbol.SortByTicker());
                 adapter.setSymbols(symbols);
             }
         });
@@ -96,12 +98,12 @@ public class ChgLastFragment extends Fragment {
     }
 
     //async task za povlacenje podataka sa weba
-    private class GetSymbolData extends AsyncTask<Void,Void,Void>{
+    private class GetSymbolData extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             InputStream inputStream = getInputStream();
-            if(inputStream != null){
+            if (inputStream != null) {
                 try {
                     initXMLParser(inputStream);
                 } catch (XmlPullParserException e) {
@@ -119,76 +121,74 @@ public class ChgLastFragment extends Fragment {
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
             //sortiranje pred ubacivanje radi dobijanja "default-nog" pregleda liste simbola
-            Collections.sort(symbols,new Symbol.SortByTicker());
+            Collections.sort(symbols, new Symbol.SortByTicker());
             adapter.setSymbols(symbols);
         }
 
         private void initXMLParser(InputStream inputStream) throws XmlPullParserException, IOException, ParseException {
             XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,false);
-            parser.setInput(inputStream,null);
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(inputStream, null);
             parser.next();
 
             //getting in Result
-            parser.require(XmlPullParser.START_TAG,null,"Result");
-            while(parser.next() != XmlPullParser.END_TAG){
-                if(parser.getEventType() != XmlPullParser.START_TAG){
+            parser.require(XmlPullParser.START_TAG, null, "Result");
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
                     continue;
                 }
 
                 //getting in Symbol list
-                parser.require(XmlPullParser.START_TAG,null,"SymbolList");
-                while (parser.next() != XmlPullParser.END_TAG){
-                    if(parser.getEventType() != XmlPullParser.START_TAG){
+                parser.require(XmlPullParser.START_TAG, null, "SymbolList");
+                while (parser.next() != XmlPullParser.END_TAG) {
+                    if (parser.getEventType() != XmlPullParser.START_TAG) {
                         continue;
                     }
 
                     //getting in Symbol
-                    if(parser.getName().equals("Symbol")){
-                         parser.require(XmlPullParser.START_TAG,null,"Symbol");
+                    if (parser.getName().equals("Symbol")) {
+                        parser.require(XmlPullParser.START_TAG, null, "Symbol");
                         //definisanje polja koja nam trebaju za keriranje klase simbol
-                         String id = parser.getAttributeValue(null,"id");
-                         String symbolName = parser.getAttributeValue(null,"name");
-                         String tickerSymbol = parser.getAttributeValue(null,"tickerSymbol");
-                         String last="";
-                         String changePrecent="";
-                         String high="";
-                         String low="";
-                         String bid="";
-                         String ask="";
-                         String volume="";
-                         Date dateTime = new Date();
-                         String change="";
+                        String id = parser.getAttributeValue(null, "id");
+                        String symbolName = parser.getAttributeValue(null, "name");
+                        String tickerSymbol = parser.getAttributeValue(null, "tickerSymbol");
+                        String last = "";
+                        String changePrecent = "";
+                        String high = "";
+                        String low = "";
+                        String bid = "";
+                        String ask = "";
+                        String volume = "";
+                        Date dateTime = new Date();
+                        String change = "";
 
-                         while (parser.next() != XmlPullParser.END_TAG){
-                             if(parser.getEventType() != XmlPullParser.START_TAG){
-                                 continue;
-                             }
-                             if(parser.getName().equals("Quote")){
-                                 parser.require(XmlPullParser.START_TAG,null,"Quote");
-                                 last = parser.getAttributeValue(null,"last");
-                                 high = parser.getAttributeValue(null,"high");
-                                 low = parser.getAttributeValue(null,"low");
-                                 bid = parser.getAttributeValue(null,"bid");
-                                 ask = parser.getAttributeValue(null,"ask");
-                                 volume = parser.getAttributeValue(null,"volume");
-                                 dateTime = parseDateString(parser.getAttributeValue(null,"dateTime"));
-                                 change = parser.getAttributeValue(null,"change");
-                                 changePrecent = parser.getAttributeValue(null,"changePercent");
-                                while(parser.next() != XmlPullParser.END_TAG){
-                                        continue;
+                        while (parser.next() != XmlPullParser.END_TAG) {
+                            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                                continue;
+                            }
+                            if (parser.getName().equals("Quote")) {
+                                parser.require(XmlPullParser.START_TAG, null, "Quote");
+                                last = parser.getAttributeValue(null, "last");
+                                high = parser.getAttributeValue(null, "high");
+                                low = parser.getAttributeValue(null, "low");
+                                bid = parser.getAttributeValue(null, "bid");
+                                ask = parser.getAttributeValue(null, "ask");
+                                volume = parser.getAttributeValue(null, "volume");
+                                dateTime = parseDateString(parser.getAttributeValue(null, "dateTime"));
+                                change = parser.getAttributeValue(null, "change");
+                                changePrecent = parser.getAttributeValue(null, "changePercent");
+                                while (parser.next() != XmlPullParser.END_TAG) {
+                                    continue;
                                 }
 
-                             }
-                             else{
-                                 skipTag(parser);
-                             }
+                            } else {
+                                skipTag(parser);
+                            }
 
-                         }
-                         Symbol symbol = new Symbol(id,symbolName,tickerSymbol,last,high,low,bid,ask,volume,dateTime,change,changePrecent);
-                         symbols.add(symbol);
-                    }
-                    else{
+                        }
+                        Symbol symbol = new Symbol(id, symbolName, tickerSymbol, last, high, low, bid, ask, volume, dateTime, change, changePrecent);
+                        symbols.add(symbol);
+                    } else {
                         skipTag(parser);
                     }
 
@@ -207,14 +207,14 @@ public class ChgLastFragment extends Fragment {
         }
 
         private void skipTag(XmlPullParser parser) throws XmlPullParserException, IOException {
-            if(parser.getEventType() != XmlPullParser.START_TAG){
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
                 //u slucaju da nije start tag
                 throw new IllegalStateException();
             }
 
             int number = 1;
-            while(number != 0){
-                switch (parser.next()){
+            while (number != 0) {
+                switch (parser.next()) {
                     case XmlPullParser.START_TAG:
                         number++;
                         break;
@@ -234,7 +234,7 @@ public class ChgLastFragment extends Fragment {
                 Authenticator.setDefault(new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("android_tt","Sk3M!@p9e".toCharArray());
+                        return new PasswordAuthentication("android_tt", "Sk3M!@p9e".toCharArray());
                     }
                 });
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -247,6 +247,7 @@ public class ChgLastFragment extends Fragment {
             return null;
         }
     }
+
     private void initViews(View view) {
         txtSymbolName = view.findViewById(R.id.txtNameAsc);
         sortAsc = view.findViewById(R.id.imageAsc);

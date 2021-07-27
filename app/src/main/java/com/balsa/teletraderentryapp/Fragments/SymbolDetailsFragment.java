@@ -28,10 +28,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class SymbolDetailsFragment extends Fragment {
     private static final String TAG = "SymbolDetailsFragment";
-    private TextView txtSymbolName,txtTickerSymbol,txtLast,txtChange,txtChangePrecent,txtHigh,txtLow,
-            txtDatetime,txtVolume,txtAsk,txtBid;
+    private TextView txtSymbolName, txtTickerSymbol, txtLast, txtChange, txtChangePrecent, txtHigh, txtLow,
+            txtDatetime, txtVolume, txtAsk, txtBid;
     private BottomNavigationView bottomNavigationView;
     private Handler handler = new Handler();
+
     public SymbolDetailsFragment() {
         // Required empty public constructor
     }
@@ -44,23 +45,31 @@ public class SymbolDetailsFragment extends Fragment {
         initBottomNavigationView();
         //prima se dolazeci bundle
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             Symbol symbol = bundle.getParcelable("selected_symbol");
-            if(symbol != null){
+            if (symbol != null) {
                 txtSymbolName.setText(symbol.getSymbolName());
-                txtTickerSymbol.setText("("+symbol.getTickerSymbol()+")");
+                txtTickerSymbol.setText("(" + symbol.getTickerSymbol() + ")");
                 //proveravanje null vrednosti i provera vrednosti
                 //----change
-                if(symbol.getChange() != null){
-                    if(Float.parseFloat(symbol.getChange())>0){
-                        txtChange.setText("+"+symbol.getChange().substring(0,5));
-                        txtChange.setTextColor(Color.GREEN);
-                    }
-                    else if(Float.parseFloat(symbol.getChange())<0){
-                        txtChange.setText(symbol.getChange().substring(0,5));
-                        txtChange.setTextColor(Color.RED);
-                    }
-                    else{
+                if (symbol.getChange() != null) {
+                    if (Float.parseFloat(symbol.getChange()) > 0) {
+                        if (symbol.getChange().length() > 5) {
+                            txtChange.setTextColor(Color.GREEN);
+                            txtChange.setText("+" + symbol.getChange().substring(0, 5));
+                        } else {
+                            txtChange.setText("+" + symbol.getChange());
+                            txtChange.setTextColor(Color.GREEN);
+                        }
+                    } else if (Float.parseFloat(symbol.getChange()) < 0) {
+                        if (symbol.getChange().length() > 5) {
+                            txtChange.setTextColor(Color.RED);
+                            txtChange.setText(symbol.getChange().substring(0, 5));
+                        } else {
+                            txtChange.setText(symbol.getChange());
+                            txtChange.setTextColor(Color.RED);
+                        }
+                    } else {
                         txtChange.setText(symbol.getChange());
                         txtChange.setTextColor(Color.WHITE);
                     }
@@ -77,41 +86,62 @@ public class SymbolDetailsFragment extends Fragment {
                         public void run() {
                             double newChangeValue = getRandomValue(currentChangeValue);
 
-                            if(newChangeValue > 0){
-                                txtChange.setText("+"+String.valueOf(newChangeValue).substring(0,5));
-                                txtChange.setTextColor(Color.GREEN);
-                            }
-                            else if(newChangeValue < 0){
-                                txtChange.setText(String.valueOf(newChangeValue).substring(0,5));
-                                txtChange.setTextColor(Color.RED);
-                            }
-                            else {
-                                txtChange.setText(String.valueOf(newChangeValue).substring(0,4));
-                                txtChange.setTextColor(Color.WHITE);
+                            if (newChangeValue > 0) {
+                                if (String.valueOf(newChangeValue).length() > 5) {
+                                    txtChange.setText("+" + String.valueOf(newChangeValue).substring(0, 5));
+                                    txtChange.setTextColor(Color.GREEN);
+                                } else {
+                                    txtChange.setText("+" + newChangeValue);
+                                    txtChange.setTextColor(Color.GREEN);
+                                }
+
+                            } else if (newChangeValue < 0) {
+                                if (String.valueOf(newChangeValue).length() > 5) {
+                                    txtChange.setText(String.valueOf(newChangeValue).substring(0, 5));
+                                    txtChange.setTextColor(Color.RED);
+                                } else {
+                                    txtChange.setText(String.valueOf(newChangeValue));
+                                    txtChange.setTextColor(Color.RED);
+                                }
+                            } else {
+                                if (String.valueOf(newChangeValue).length() > 5) {
+                                    txtChange.setText(String.valueOf(newChangeValue).substring(0, 5));
+                                    txtChange.setTextColor(Color.WHITE);
+                                } else {
+                                    txtChange.setText(String.valueOf(newChangeValue));
+                                    txtChange.setTextColor(Color.WHITE);
+                                }
+
                             }
                         }
-                    },getRandomMillis(3000,30000));
+                    }, getRandomMillis(3000, 30000));
 
-                }
-                else{
+                } else {
                     txtChange.setText("None");
                     txtChange.setTextColor(Color.WHITE);
                 }
                 //------change precent and last
-                if(symbol.getChangePrecent() != null){
-                    if(Float.parseFloat(symbol.getChangePrecent())>0){
-                        txtChangePrecent.setText("+"+symbol.getChangePrecent().substring(0,4)+"%");
+                if (symbol.getChangePrecent() != null) {
+                    if (Float.parseFloat(symbol.getChangePrecent()) > 0) {
+                        if (symbol.getChangePrecent().length() > 4) {
+                            txtChangePrecent.setText("+" + symbol.getChangePrecent().substring(0, 4) + "%");
+                        } else {
+                            txtChangePrecent.setText("+" + symbol.getChangePrecent() + "%");
+                        }
+
                         txtChangePrecent.setTextColor(Color.GREEN);
                         txtLast.setText(symbol.getLast());
                         txtLast.setTextColor(Color.GREEN);
-                    }
-                    else if(Float.parseFloat(symbol.getChangePrecent())<0){
-                        txtChangePrecent.setText(symbol.getChangePrecent().substring(0,6)+"%");
+                    } else if (Float.parseFloat(symbol.getChangePrecent()) < 0) {
+                        if (symbol.getChangePrecent().length() > 5) {
+                            txtChangePrecent.setText(symbol.getChangePrecent().substring(0, 5) + "%");
+                        } else {
+                            txtChangePrecent.setText(symbol.getChangePrecent() + "%");
+                        }
                         txtChangePrecent.setTextColor(Color.RED);
                         txtLast.setText(symbol.getLast());
                         txtLast.setTextColor(Color.RED);
-                    }
-                    else{
+                    } else {
                         txtChangePrecent.setText(symbol.getChangePrecent());
                         txtChangePrecent.setTextColor(Color.WHITE);
                         txtLast.setText(symbol.getLast());
@@ -120,36 +150,45 @@ public class SymbolDetailsFragment extends Fragment {
 
                     //--------------simulacija procenta
 
-                        //uzimanje vrednosti Change-a i castovanje u float
-                        String valueChange = symbol.getChangePrecent();
-                        float currentChangeValue = Float.parseFloat(valueChange);
+                    //uzimanje vrednosti Change-a i castovanje u float
+                    String valueChange = symbol.getChangePrecent();
+                    float currentChangeValue = Float.parseFloat(valueChange);
 
-                        //handle klasa radi simulacije skokova i padova vrednosti u pozadini
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                double newChangeValue = getRandomValue(currentChangeValue);
+                    //handle klasa radi simulacije skokova i padova vrednosti u pozadini
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            double newChangeValue = getRandomValue(currentChangeValue);
+                            if (newChangeValue > 0) {
+                                if (String.valueOf(newChangeValue).length() > 4) {
+                                    txtChangePrecent.setText("+" + String.valueOf(newChangeValue).substring(0, 4) + "%");
+                                } else {
+                                    txtChangePrecent.setText("+" + newChangeValue + "%");
+                                }
 
-                                if(newChangeValue > 0){
-                                    txtChangePrecent.setText("+"+String.valueOf(newChangeValue).substring(0,4)+"%");
-                                    txtChangePrecent.setTextColor(Color.GREEN);
+                                txtChangePrecent.setTextColor(Color.GREEN);
+                            } else if (newChangeValue < 0) {
+                                if (String.valueOf(newChangeValue).length() > 5) {
+                                    txtChangePrecent.setText(String.valueOf(newChangeValue).substring(0, 5) + "%");
+                                } else {
+                                    txtChangePrecent.setText(newChangeValue + "%");
                                 }
-                                else if(newChangeValue < 0){
-                                    txtChangePrecent.setText(String.valueOf(newChangeValue).substring(0,5)+"%");
-                                    txtChangePrecent.setTextColor(Color.RED);
+                                txtChangePrecent.setTextColor(Color.RED);
+                            } else {
+                                if (String.valueOf(newChangeValue).length() > 4) {
+                                    txtChangePrecent.setText(String.valueOf(newChangeValue).substring(0, 4) + "%");
+                                } else {
+                                    txtChangePrecent.setText(String.valueOf(newChangeValue));
                                 }
-                                else {
-                                    txtChangePrecent.setText(String.valueOf(newChangeValue).substring(0,4)+"%");
-                                    txtChangePrecent.setTextColor(Color.WHITE);
-                                }
+                                txtChangePrecent.setTextColor(Color.WHITE);
                             }
-                        },getRandomMillis(3000,30000));
-                }
-                else{
+                        }
+                    }, getRandomMillis(3000, 30000));
+                } else {
                     txtChangePrecent.setText("None");
                     txtChangePrecent.setTextColor(Color.WHITE);
                 }
-                if(symbol.getLast() == null){
+                if (symbol.getLast() == null) {
                     txtLast.setText("None");
                     txtLast.setTextColor(Color.WHITE);
                 }
@@ -167,91 +206,91 @@ public class SymbolDetailsFragment extends Fragment {
 
                         double newLastValue = getRandomValue(currentLastValue);
 
-                        if(newLastValue-currentLastValue >= 0){
-                            if(String.valueOf(newLastValue).length()>=9){
-                                txtLast.setText(String.valueOf(newLastValue).substring(0,9));
-                                txtLast.setBackgroundColor(getActivity().getResources().getColor(R.color.stocks_up));
+                        if (newLastValue - currentLastValue >= 0) {
+                            if (String.valueOf(newLastValue).length() > 9) {
+                                txtLast.setText(String.valueOf(newLastValue).substring(0, 9));
+                            } else {
+                                txtLast.setText(String.valueOf(newLastValue));
                             }
-                        }
-                        else{
-                            if (String.valueOf(newLastValue).length()>=9){
-                                txtLast.setText(String.valueOf(newLastValue).substring(0,9));
-                                txtLast.setBackgroundColor(getActivity().getResources().getColor(R.color.stocks_down));
+                            txtLast.setBackgroundColor(getActivity().getResources().getColor(R.color.stocks_up));
+                        } else {
+                            if (String.valueOf(newLastValue).length() > 9) {
+                                txtLast.setText(String.valueOf(newLastValue).substring(0, 9));
+                            } else {
+                                txtLast.setText(String.valueOf(newLastValue));
                             }
+                            txtLast.setBackgroundColor(getActivity().getResources().getColor(R.color.stocks_down));
                         }
                         // za vracanje pozadine na crnu boju posle 2 sekunde
-                        new CountDownTimer(2000,500){
+                        new CountDownTimer(2000, 500) {
                             @Override
                             public void onTick(long millisUntilFinished) {
 
                             }
+
                             @Override
                             public void onFinish() {
                                 txtLast.setBackgroundColor(Color.BLACK);
                             }
                         }.start();
                     }
-                },getRandomMillis(3000,30000));
+                }, getRandomMillis(3000, 30000));
 
                 //-------high
-                if(symbol.getHigh() != null){
+                if (symbol.getHigh() != null) {
                     txtHigh.setText(symbol.getHigh());
-                }
-                else{
+                } else {
                     txtHigh.setText("None");
                 }
                 //-------low
-                if(symbol.getLow() != null){
+                if (symbol.getLow() != null) {
                     txtLow.setText(symbol.getHigh());
-                }
-                else{
+                } else {
                     txtLow.setText("None");
                 }
                 //-------volume
-                if(symbol.getVolume() != null){
+                if (symbol.getVolume() != null) {
                     txtVolume.setText(symbol.getVolume());
-                }
-                else{
+                } else {
                     txtVolume.setText("None");
                 }
                 //-------ask
-                if(symbol.getAsk() != null){
+                if (symbol.getAsk() != null) {
                     txtAsk.setText(symbol.getAsk());
-                }
-                else{
+                } else {
                     txtAsk.setText("None");
                 }
                 //-------bid
-                if(symbol.getAsk() != null){
+                if (symbol.getAsk() != null) {
                     txtBid.setText(symbol.getBid());
-                }
-                else{
+                } else {
                     txtBid.setText("None");
                 }
 
                 txtDatetime.setText(String.valueOf(symbol.getDateTime()));
-            }
-            else {
+            } else {
                 Log.d(TAG, "onCreateView: vrednost simbola je null");
             }
-        }
-        else{
+        } else {
             Log.d(TAG, "onCreateView: Vrednost bundla je null");
         }
         return view;
     }
+
     //funkcija za dobijanje random millisekundi izmedju unetih parametra
-    private Long getRandomMillis(int a, int b){
-        double millis = Math.random() * (b-a) + a;
+    private Long getRandomMillis(int a, int b) {
+        double millis = Math.random() * (b - a) + a;
         return Math.round(millis);
     }
+
     //funkcija koja na osnovu proslednjenog float broja nalazi nasumican broj izmedju -20% i +20% od prosledjenog float-a
-    private double getRandomValue(float number){
-        double lower = number-(number*0.2); //max
-        double upper = number+(number*0.2); //min
-        String newLastValue = String.valueOf(Math.random() * (upper-lower) + lower);
+    private double getRandomValue(float number) {
+        double lower = number - (number * 0.2); //max
+        double upper = number + (number * 0.2); //min
+        String newLastValue = String.valueOf(Math.random() * (upper - lower) + lower);
         return Double.parseDouble(newLastValue);
     }
+
     private void initViews(View view) {
         txtSymbolName = view.findViewById(R.id.txtSymbolNameDetails);
         txtTickerSymbol = view.findViewById(R.id.txtTickerSymbolDetails);
@@ -266,12 +305,13 @@ public class SymbolDetailsFragment extends Fragment {
         txtDatetime = view.findViewById(R.id.txtDateTimeDetails);
         bottomNavigationView = view.findViewById(R.id.bottomNavViewSymDetails);
     }
+
     private void initBottomNavigationView() {
         bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.web:
                         Intent webintent = new Intent(getActivity(), GitHubActivity.class);
                         startActivity(webintent);
@@ -282,7 +322,7 @@ public class SymbolDetailsFragment extends Fragment {
                         break;
                     case R.id.news:
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentContainer,new NewsFragment())
+                                .replace(R.id.fragmentContainer, new NewsFragment())
                                 .addToBackStack(null)
                                 .commit();
                         break;
